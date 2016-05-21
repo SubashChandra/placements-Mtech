@@ -31,11 +31,12 @@ int main()
 		it=m1.find(str[i]);
 		if(it->second>=1)
 		{
-			cout<<it->first;		
+			str[index]=str[i];
 			it->second=0;
 			index++;
 		}
 	}
-	cout<<endl;
+	str.resize(index);
+	cout<<str<<endl;
 	return 0;
 }
