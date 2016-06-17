@@ -19,6 +19,8 @@ void auxFunc(int arr[], int n)
 			zeroIndex=j;
 			zeroCount++;
 			j++;
+			if(zeroCount==1)
+				targetIndex=zeroIndex;
 			if(zeroCount>1)
 			{
 				while(i<j && arr[i]!=0)
@@ -49,6 +51,11 @@ void auxFunc(int arr[], int n)
 		targetIndex=zeroIndex;
 	if(maxLength>n)
 		maxLength=n;
+	if(maxLength==0)
+	{
+		maxLength=1;
+		targetIndex=0;
+	}
 	cout<<maxLength<<endl;
 	cout<<"Index:"<<targetIndex<<endl;
 }
