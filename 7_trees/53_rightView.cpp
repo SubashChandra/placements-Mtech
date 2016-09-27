@@ -69,35 +69,20 @@ void postOrder(Treeptr root)
 	}
 }
 
-void populate(Treeptr  root, map<int,vector<int> > &m1, int pos)
+void rightView(Treeptr root, int &maxLevel, int level)
 {
 	if(root==NULL)
 		return;
 
-	m1[pos].push_back(root->data);
-	populate(root->left,m1,pos-1);
-	populate(root->right,m1,pos+1);
-}
-
-
-void auxFunc(Treeptr root)
-{
-	if(root==NULL)
-		return;
-
-	map<int, vector<int> > m1;
-	populate(root, m1,0);
-	map<int,vector<int> >::iterator it;
-	for(it=m1.begin();it!=m1.end();it++)
+	if(level>maxLevel)
 	{
-		vector<int> temp=it->second;
-		for(int i=0;i<temp.size();i++)
-			cout<<temp[i]<<" ";
-		cout<<endl;
+		cout<<root->data<<" ";
+		maxLevel=level;
 	}
-
-
+	rightView(root->right,maxLevel,level+1);
+	rightView(root->left,maxLevel,level+1);
 }
+
 
 int main()
 {
@@ -120,9 +105,10 @@ int main()
 	inOrder(root);
 	cout<<endl;
 	cout<<"postorder:"<<endl;
+	int maxLevel=0;
 	postOrder(root);
 	cout<<endl;
-
-	auxFunc(root);
+	rightView(root,maxLevel,1);
+	cout<<endl;
 	return 0;
 }

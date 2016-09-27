@@ -69,35 +69,46 @@ void postOrder(Treeptr root)
 	}
 }
 
-void populate(Treeptr  root, map<int,vector<int> > &m1, int pos)
-{
-	if(root==NULL)
-		return;
-
-	m1[pos].push_back(root->data);
-	populate(root->left,m1,pos-1);
-	populate(root->right,m1,pos+1);
-}
-
-
 void auxFunc(Treeptr root)
 {
 	if(root==NULL)
 		return;
+	stack<Treeptr> s1;
+	stack<Treeptr> s2;
 
-	map<int, vector<int> > m1;
-	populate(root, m1,0);
-	map<int,vector<int> >::iterator it;
-	for(it=m1.begin();it!=m1.end();it++)
+	s1.push(root);
+	while(s1.size()!=0 || s2.size()!=0)
 	{
-		vector<int> temp=it->second;
-		for(int i=0;i<temp.size();i++)
-			cout<<temp[i]<<" ";
-		cout<<endl;
+		if(s1.size()!=0)
+		{
+			while(s1.size()!=0)
+			{
+				root=s1.top();
+				s1.pop();
+				cout<<root->data<<" ";
+				if(root->right)
+					s2.push(root->right);
+				if(root->left)
+					s2.push(root->left);
+			}
+		}
+		else
+		{
+			while(s2.size()!=0)
+			{
+				root=s2.top();
+				s2.pop();
+				cout<<root->data<<" ";
+				if(root->left)
+					s1.push(root->left);
+				if(root->right)
+					s1.push(root->right);
+			}
+		}
 	}
-
-
+	cout<<endl;
 }
+
 
 int main()
 {
@@ -122,7 +133,6 @@ int main()
 	cout<<"postorder:"<<endl;
 	postOrder(root);
 	cout<<endl;
-
 	auxFunc(root);
 	return 0;
 }
