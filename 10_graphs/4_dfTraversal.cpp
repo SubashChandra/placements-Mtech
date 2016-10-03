@@ -1,32 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void bft(vector<vector<int> >vec, int startNode)
+void auxUtil(vector<vector<int> > vec, int startNode, vector<int> &visited)
 {
-	int v=vec.size();
-	vector<int> visited(v,0);
-
-	queue<int> q;
-	q.push(startNode);
 	visited[startNode]=1;
-	while(q.size()!=0)
+	cout<<startNode<<" ";
+	vector<int> temp=vec[startNode];
+	for(int i=0;i<temp.size();i++)
 	{
-		int temp=q.front();
-		cout<<temp<<" ";
-		q.pop();
-		vector<int> cur=vec[temp];
-		for(int i=0;i<cur.size();i++)
-		{
-			if(visited[cur[i]]==0)
-			{
-				visited[cur[i]]=1;
-				q.push(cur[i]);
-			}
-		}
+		if(visited[temp[i]]==0)
+			auxUtil(vec,temp[i],visited);
 	}
-	cout<<endl;
 }
 
+void auxFunc(vector<vector<int> > vec, int startNode)
+{
+	vector<int> visited(vec.size(),0);
+	auxUtil(vec,startNode,visited);
+	cout<<endl;
+}
 
 int main()
 {
@@ -53,11 +45,9 @@ int main()
 		}
 		cout<<endl;
 	}
-
-	cout<<"breadth first traversal"<<endl;
 	int startNode;
 	cin>>startNode;
-	bft(vec,startNode);
+	auxFunc(vec,startNode);
 	return 0;
 }
 
